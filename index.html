@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Prasanna Sapkota - About Me</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    body {
+      background: radial-gradient(circle at top left, #1e1f26, #101010);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .aura {
+      position: absolute;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, #00ffe1, #0072ff);
+      opacity: 0.07;
+      border-radius: 50%;
+      filter: blur(150px);
+      z-index: 0;
+    }
+
+    .card {
+      position: relative;
+      z-index: 1;
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(12px);
+      border-radius: 20px;
+      padding: 30px 25px;
+      max-width: 600px;
+      width: 100%;
+      color: #fff;
+      box-shadow: 0 8px 32px rgba(0, 255, 255, 0.15);
+      text-align: center;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    .profile-pic {
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 4px solid #00ffe1;
+      margin-bottom: 20px;
+    }
+
+    h1 {
+      font-size: 2.4em;
+      margin-bottom: 10px;
+      background: linear-gradient(to right, #00ffe1, #00c6ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    p.description {
+      font-size: 1.05em;
+      line-height: 1.8;
+      text-align: justify;
+      color: #e0e0e0;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 600px) {
+      .card {
+        padding: 20px 15px;
+      }
+
+      h1 {
+        font-size: 1.6em;
+      }
+
+      p.description {
+        font-size: 1em;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="aura"></div>
+
+  <div class="card">
+    <img src="pr.png" alt="Profile Picture" class="profile-pic">
+    <h1>Prasanna Sapkota</h1>
+    <p class="description">
+      Hello! I'm Prasanna Sapkota, a highly motivated and curious student with a deep interest in technology and innovation. My hobbies include coding, gaming, exploring new apps, and designing things that make life easier. I enjoy spending time learning about software development, AI, and problem-solving. I'm passionate about creating things that are not just cool but also useful for people around me. <br><br>
+      In the future, I dream of becoming a top-level Software Engineer — someone who builds tools, apps, and platforms that people love and use every day. I want to bring new ideas to life, contribute to the tech world, and inspire others with what I create. My journey is just beginning, but I'm already walking confidently toward my goals with discipline, creativity, and passion.
+    </p>
+  </div>
+
+</body>
+</html>
