@@ -1,34 +1,239 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Prasanna Sapkota - Profile</title>
-<style>
-body{
-    margin:0;
-    height:100vh;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    background:#0a0a0a;
-    font-family:Segoe UI, sans-serif;
-    color:white;
-}.card{ width:90%; max-width:900px; padding:40px; border-radius:20px; text-align:center; background:#111; box-shadow:0 0 20px #00f7ff,0 0 40px #00f7ff,0 0 60px #00f7ff; }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DAKU EXPRESS OFFICIAL</title>
+    <style>
+        :root {
+            --bg: #000205;
+            --accent: #00f2ff;
+            --gold: #ffd43b;
+            --pfp-size: 150px; 
+        }
 
-.profile{ width:160px; height:160px; border-radius:50%; object-fit:cover; border:4px solid #00f7ff; box-shadow:0 0 15px #00f7ff,0 0 30px #00f7ff; margin-bottom:20px; }
+        * { margin: 0; padding: 0; box-sizing: border-box; cursor: none; }
 
-h1{ font-size:40px; margin:10px 0; color:#00f7ff; text-shadow:0 0 10px #00f7ff,0 0 20px #00f7ff; }
+        body {
+            background-color: var(--bg);
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
 
-p{ font-size:18px; line-height:1.7; color:#e6e6e6; }
+        /* CUSTOM CURSOR */
+        #cursor {
+            position: fixed;
+            width: 10px; height: 10px;
+            background: var(--accent);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            mix-blend-mode: difference;
+        }
 
-.glow{ color:#00f7ff; font-weight:bold; }
+        /* MATRIX BG */
+        #matrix-canvas {
+            position: fixed;
+            top: 0; left: 0;
+            z-index: -1;
+            opacity: 0.15;
+        }
 
-</style>
+        /* THE HEAD SECTION (TOP FOCUS) */
+        .head-container {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            border-bottom: 1px solid rgba(0, 242, 255, 0.1);
+        }
+
+        .profile-head {
+            position: relative;
+            width: var(--pfp-size);
+            height: var(--pfp-size);
+            margin-bottom: 30px;
+        }
+
+        /* Glowing Pulse behind photo */
+        .profile-head::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: var(--accent);
+            border-radius: 50%;
+            filter: blur(40px);
+            opacity: 0.2;
+            animation: pulse-glow 3s infinite;
+        }
+
+        .pfp-img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #fff;
+            position: relative;
+            z-index: 10;
+            box-shadow: 0 0 30px rgba(0, 242, 255, 0.5);
+        }
+
+        .orbit-ring {
+            position: absolute;
+            top: -15px; left: -15px; right: -15px; bottom: -15px;
+            border: 2px dashed var(--accent);
+            border-radius: 50%;
+            animation: spin 15s linear infinite;
+        }
+
+        /* BRANDING TEXT */
+        .branding-name {
+            font-family: monospace;
+            letter-spacing: 8px;
+            color: var(--accent);
+            font-size: 1rem;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            animation: fadeInDown 1s ease;
+        }
+
+        .main-hero-title {
+            font-size: clamp(2.5rem, 8vw, 4.5rem);
+            font-weight: 900;
+            letter-spacing: -2px;
+            text-transform: uppercase;
+            background: linear-gradient(to bottom, #fff 60%, var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1;
+        }
+
+        .sub-badge {
+            margin-top: 20px;
+            padding: 6px 25px;
+            background: rgba(0, 242, 255, 0.1);
+            border: 1px solid var(--accent);
+            border-radius: 50px;
+            font-size: 0.8rem;
+            color: var(--accent);
+            letter-spacing: 4px;
+            font-family: monospace;
+        }
+
+        /* SCROLLABLE CONTENT */
+        .content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 100px 20px;
+        }
+
+        .section {
+            margin-bottom: 150px;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: 1s ease-out;
+        }
+
+        .section.active { opacity: 1; transform: translateY(0); }
+
+        h2 { font-size: 0.9rem; color: var(--accent); letter-spacing: 5px; margin-bottom: 25px; }
+        p { font-size: 1.2rem; color: #94a3b8; line-height: 1.8; }
+
+        .py-tag {
+            margin-top: 30px;
+            padding: 15px;
+            background: rgba(255, 212, 59, 0.05);
+            border-left: 4px solid var(--gold);
+            color: var(--gold);
+            font-family: monospace;
+        }
+
+        /* ANIMATIONS */
+        @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        @keyframes pulse-glow { 0%, 100% { transform: scale(1); opacity: 0.2; } 50% { transform: scale(1.2); opacity: 0.4; } }
+        @keyframes fadeInDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+
+        footer { text-align: center; padding: 60px; font-family: monospace; color: #222; letter-spacing: 10px; }
+    </style>
 </head>
-<body><div class="card"><img src="pr.png" alt="Prasanna Sapkota" class="profile"><h1>Prasanna Sapkota</h1><p>
-Hello! My name is <span class="glow">Prasanna Sapkota</span>. I am a curious and enthusiastic student who loves learning new things every day. I have a strong interest in <span class="glow">technology, programming, and mathematics</span>. I enjoy experimenting with HTML, creating designs, and exploring how apps and websites work. My goal is to improve my skills in coding and become someone who can create useful digital tools in the future.<br><br>
+<body>
 
-Besides technology, I also like discussing ideas about society, education, and current topics. I believe that learning, creativity, and curiosity are the keys to success. Every day I try to gain more knowledge and improve myself so that I can achieve my dreams and contribute something meaningful in the future.
+    <div id="cursor"></div>
+    <canvas id="matrix-canvas"></canvas>
 
-</p></div></body>
-</html>
+    <div class="head-container">
+        <div class="profile-head">
+            <div class="orbit-ring"></div>
+            <img src="https://i.ibb.co/3mPyZhNn/adiyogi-lord-shiva-1080x1920-14420.png" class="pfp-img" alt="DAKU EXPRESS">
+        </div>
+
+        <div class="branding-name">DAKU EXPRESS OFFICIAL</div>
+        <h1 class="main-hero-title">Future<br>Developer</h1>
+        <div class="sub-badge">CLASS 8 // NEPAL</div>
+        
+        <p style="margin-top: 40px; font-size: 0.7rem; color: #444; letter-spacing: 2px;">SCROLL TO UNLOCK DATA</p>
+    </div>
+
+    <div class="content">
+        <section class="section">
+            <h2>// BIOGRAPHY</h2>
+            <p>I am a student at the <span style="color:#fff">Class 8</span> academic level, blending education with the art of logical scripting. Every project is an evolution.</p>
+        </section>
+
+        <section class="section">
+            <h2>// TECH_LOG</h2>
+            <p>Currently engineering structural foundations with <span style="color:#fff">HTML</span> while expanding into backend architecture.</p>
+            <div class="py-tag">> STATUS: LEARNING_PYTHON_ACTIVE</div>
+        </section>
+
+        <section class="section">
+            <h2>// MISSION</h2>
+            <p>Target: <span style="color:#fff">Future Developer</span>. My mission is to bridge the gap between creative imagination and technical reality.</p>
+        </section>
+
+        <footer>DAKU EXPRESS OFFICIAL</footer>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('matrix-canvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        const alphabet = '01';
+        const fontSize = 16;
+        const columns = canvas.width / fontSize;
+        const drops = Array.from({ length: columns }).fill(1);
+
+        function draw() {
+            ctx.fillStyle = 'rgba(0, 2, 5, 0.1)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = '#00f2ff';
+            ctx.font = fontSize + 'px monospace';
+            for (let i = 0; i < drops.length; i++) {
+                const text = alphabet.charAt(Math.floor(Math.random() * alphabet.length));
+                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
+                drops[i]++;
+            }
+        }
+        setInterval(draw, 50);
+
+        const cursor = document.getElementById('cursor');
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+        });
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('active');
+            });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.section').forEach(s => observer.observe(s));
+    </script>
+</body>
+                </html>
