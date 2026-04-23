@@ -3,237 +3,180 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DAKU EXPRESS OFFICIAL</title>
+    <title>Prasanna Sapkota | DAKU</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+
     <style>
         :root {
-            --bg: #000205;
-            --accent: #00f2ff;
-            --gold: #ffd43b;
-            --pfp-size: 150px; 
+            --bg: #030303;
+            --card: #0c0c0c;
+            --border: #1a1a1a;
+            --accent: #ffffff;
+            --text-secondary: #777777;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; cursor: none; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Outfit', sans-serif;
+        }
 
         body {
             background-color: var(--bg);
-            color: #fff;
-            font-family: 'Inter', sans-serif;
-            overflow-x: hidden;
-            scroll-behavior: smooth;
-        }
-
-        /* CUSTOM CURSOR */
-        #cursor {
-            position: fixed;
-            width: 10px; height: 10px;
-            background: var(--accent);
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 9999;
-            mix-blend-mode: difference;
-        }
-
-        /* MATRIX BG */
-        #matrix-canvas {
-            position: fixed;
-            top: 0; left: 0;
-            z-index: -1;
-            opacity: 0.15;
-        }
-
-        /* THE HEAD SECTION (TOP FOCUS) */
-        .head-container {
-            height: 100vh;
+            color: var(--accent);
             display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
-            text-align: center;
-            border-bottom: 1px solid rgba(0, 242, 255, 0.1);
+            min-height: 100vh;
+            padding: 20px;
         }
 
-        .profile-head {
-            position: relative;
-            width: var(--pfp-size);
-            height: var(--pfp-size);
-            margin-bottom: 30px;
-        }
-
-        /* Glowing Pulse behind photo */
-        .profile-head::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: var(--accent);
-            border-radius: 50%;
-            filter: blur(40px);
-            opacity: 0.2;
-            animation: pulse-glow 3s infinite;
-        }
-
-        .pfp-img {
+        .bento-container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            max-width: 750px;
             width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 3px solid #fff;
-            position: relative;
-            z-index: 10;
-            box-shadow: 0 0 30px rgba(0, 242, 255, 0.5);
         }
 
-        .orbit-ring {
-            position: absolute;
-            top: -15px; left: -15px; right: -15px; bottom: -15px;
-            border: 2px dashed var(--accent);
-            border-radius: 50%;
-            animation: spin 15s linear infinite;
-        }
-
-        /* BRANDING TEXT */
-        .branding-name {
-            font-family: monospace;
-            letter-spacing: 8px;
-            color: var(--accent);
-            font-size: 1rem;
-            text-transform: uppercase;
-            margin-bottom: 10px;
-            animation: fadeInDown 1s ease;
-        }
-
-        .main-hero-title {
-            font-size: clamp(2.5rem, 8vw, 4.5rem);
-            font-weight: 900;
-            letter-spacing: -2px;
-            text-transform: uppercase;
-            background: linear-gradient(to bottom, #fff 60%, var(--accent));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            line-height: 1;
-        }
-
-        .sub-badge {
-            margin-top: 20px;
-            padding: 6px 25px;
-            background: rgba(0, 242, 255, 0.1);
-            border: 1px solid var(--accent);
-            border-radius: 50px;
-            font-size: 0.8rem;
-            color: var(--accent);
-            letter-spacing: 4px;
-            font-family: monospace;
-        }
-
-        /* SCROLLABLE CONTENT */
-        .content {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 100px 20px;
-        }
-
-        .section {
-            margin-bottom: 150px;
+        .box {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 28px;
+            padding: 24px;
+            overflow: hidden; 
+            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
             opacity: 0;
             transform: translateY(30px);
-            transition: 1s ease-out;
+            animation: revealUp 0.8s ease forwards;
         }
 
-        .section.active { opacity: 1; transform: translateY(0); }
-
-        h2 { font-size: 0.9rem; color: var(--accent); letter-spacing: 5px; margin-bottom: 25px; }
-        p { font-size: 1.2rem; color: #94a3b8; line-height: 1.8; }
-
-        .py-tag {
-            margin-top: 30px;
-            padding: 15px;
-            background: rgba(255, 212, 59, 0.05);
-            border-left: 4px solid var(--gold);
-            color: var(--gold);
-            font-family: monospace;
+        .box:hover {
+            border-color: #333;
+            transform: translateY(-5px);
         }
 
-        /* ANIMATIONS */
-        @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-        @keyframes pulse-glow { 0%, 100% { transform: scale(1); opacity: 0.2; } 50% { transform: scale(1.2); opacity: 0.4; } }
-        @keyframes fadeInDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+        .profile-box {
+            grid-column: span 4;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            animation-delay: 0.1s;
+        }
 
-        footer { text-align: center; padding: 60px; font-family: monospace; color: #222; letter-spacing: 10px; }
+        .avatar-container {
+            flex-shrink: 0;
+            width: 75px;
+            height: 75px;
+            border-radius: 18px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+        }
+
+        .avatar-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .header-text h1 { font-size: 1.4rem; font-weight: 700; letter-spacing: -0.5px; }
+        .header-text p { color: var(--text-secondary); font-size: 0.85rem; }
+
+        .desc-box { grid-column: span 4; animation-delay: 0.2s; }
+        .description { font-size: 0.95rem; line-height: 1.7; color: #d1d1d1; }
+
+        .skill-box { grid-column: span 2; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; }
+        .skill-box i { font-size: 1.4rem; color: var(--text-secondary); }
+        .skill-box h3 { font-size: 0.85rem; font-weight: 500; }
+
+        .contact-box {
+            grid-column: span 4;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--accent);
+            color: var(--bg);
+            text-decoration: none;
+            font-weight: 700;
+            padding: 20px 30px;
+            animation-delay: 0.5s;
+        }
+
+        .social-box {
+            grid-column: span 4;
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            border: none;
+            background: transparent;
+            animation-delay: 0.6s;
+        }
+
+        .social-box a { color: var(--text-secondary); font-size: 1.3rem; transition: 0.3s; }
+        .social-box a:hover { color: var(--accent); transform: translateY(-5px); }
+
+        @keyframes revealUp {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 600px) {
+            .bento-container { grid-template-columns: 1fr; }
+            .box, .profile-box, .desc-box, .skill-box, .contact-box { grid-column: span 1; }
+        }
     </style>
 </head>
 <body>
 
-    <div id="cursor"></div>
-    <canvas id="matrix-canvas"></canvas>
-
-    <div class="head-container">
-        <div class="profile-head">
-            <div class="orbit-ring"></div>
-            <img src="https://i.ibb.co/3mPyZhNn/adiyogi-lord-shiva-1080x1920-14420.png" class="pfp-img" alt="DAKU EXPRESS">
+<div class="bento-container">
+    
+    <div class="box profile-box">
+        <div class="avatar-container">
+            <img src="https://i.ibb.co/84R6QK11/adiyogi-lord-shiva-1080x1920-14420.png" alt="Prasanna Sapkota" class="avatar-img">
         </div>
-
-        <div class="branding-name">DAKU EXPRESS OFFICIAL</div>
-        <h1 class="main-hero-title">Future<br>Developer</h1>
-        <div class="sub-badge">CLASS 8 // NEPAL</div>
-        
-        <p style="margin-top: 40px; font-size: 0.7rem; color: #444; letter-spacing: 2px;">SCROLL TO UNLOCK DATA</p>
+        <div class="header-text">
+            <h1>Prasanna Sapkota</h1>
+            <p>Future Developer • Grade 9</p>
+        </div>
     </div>
 
-    <div class="content">
-        <section class="section">
-            <h2>// BIOGRAPHY</h2>
-            <p>I am a student at the <span style="color:#fff">Class 8</span> academic level, blending education with the art of logical scripting. Every project is an evolution.</p>
-        </section>
-
-        <section class="section">
-            <h2>// TECH_LOG</h2>
-            <p>Currently engineering structural foundations with <span style="color:#fff">HTML</span> while expanding into backend architecture.</p>
-            <div class="py-tag">> STATUS: LEARNING_PYTHON_ACTIVE</div>
-        </section>
-
-        <section class="section">
-            <h2>// MISSION</h2>
-            <p>Target: <span style="color:#fff">Future Developer</span>. My mission is to bridge the gap between creative imagination and technical reality.</p>
-        </section>
-
-        <footer>DAKU EXPRESS OFFICIAL</footer>
+    <div class="box desc-box">
+        <p class="description">
+            I am Prasanna Sapkota, widely known as DAKU.<br>
+            Currently, I am a student studying in Grade 9.<br>
+            I have a dedicated interest in the field of technology.<br>
+            My technical focus is on learning Python programming.<br>
+            I am working toward improving my coding skills daily.<br>
+            My objective is to become a professional developer.<br>
+            I aim to pursue a career as a Software Engineer.<br>
+            I am focused on building a future in software creation.
+        </p>
     </div>
 
-    <script>
-        const canvas = document.getElementById('matrix-canvas');
-        const ctx = canvas.getContext('2d');
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-        const alphabet = '01';
-        const fontSize = 16;
-        const columns = canvas.width / fontSize;
-        const drops = Array.from({ length: columns }).fill(1);
+    <div class="box skill-box">
+        <i class="fa-brands fa-python"></i>
+        <h3>Python</h3>
+    </div>
 
-        function draw() {
-            ctx.fillStyle = 'rgba(0, 2, 5, 0.1)';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-            ctx.fillStyle = '#00f2ff';
-            ctx.font = fontSize + 'px monospace';
-            for (let i = 0; i < drops.length; i++) {
-                const text = alphabet.charAt(Math.floor(Math.random() * alphabet.length));
-                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
-                drops[i]++;
-            }
-        }
-        setInterval(draw, 50);
+    <div class="box skill-box">
+        <i class="fa-solid fa-code"></i>
+        <h3>Developer</h3>
+    </div>
 
-        const cursor = document.getElementById('cursor');
-        document.addEventListener('mousemove', (e) => {
-            cursor.style.left = e.clientX + 'px';
-            cursor.style.top = e.clientY + 'px';
-        });
+    <a href="mailto:prasannasapkota122@gmail.com" class="box contact-box">
+        <span>Connect via Email</span>
+        <i class="fa-solid fa-envelope"></i>
+    </a>
 
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) entry.target.classList.add('active');
-            });
-        }, { threshold: 0.1 });
-        document.querySelectorAll('.section').forEach(s => observer.observe(s));
-    </script>
+    <div class="box social-box">
+        <a href="https://www.facebook.com/share/18G5JyVsy4/" target="_blank"><i class="fab fa-facebook-f"></i></a>
+        <a href="https://www.instagram.com/coding_with_dakuu" target="_blank"><i class="fab fa-instagram"></i></a>
+        <a href="https://wa.me/9779748303931" target="_blank"><i class="fab fa-whatsapp"></i></a>
+    </div>
+
+</div>
+
 </body>
-                </html>
+</html>
