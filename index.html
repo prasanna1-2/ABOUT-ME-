@@ -201,7 +201,7 @@ db.ref("status").on("value", snap => {
     let el = document.getElementById("status");
 
     if(state === "online"){
-        el.innerText = "● ONLINE";
+        el.innerText = "● offline";
         el.classList.add("online");
     } else {
         el.innerText = "● OFFLINE";
