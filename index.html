@@ -9,182 +9,74 @@
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
 
 <style>
-:root {
-    --bg: #030303;
-    --card: #0c0c0c;
-    --border: #1a1a1a;
-    --accent: #ffffff;
-    --text-secondary: #777777;
-}
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Outfit', sans-serif;
-}
-
 body {
-    background: var(--bg);
+    margin: 0;
+    background: #030303;
     color: white;
+    font-family: 'Outfit', sans-serif;
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
 }
 
-/* STATUS */
+/* STATUS BOX */
 .status-box {
     position: fixed;
     top: 20px;
     right: 20px;
     background: #0c0c0c;
     border: 1px solid #1a1a1a;
-    padding: 10px 15px;
-    border-radius: 20px;
-    font-weight: 600;
-    color: red;
+    padding: 10px 20px;
+    border-radius: 50px;
+    font-weight: 800;
+    font-size: 14px;
+    letter-spacing: 1px;
+    transition: all 0.4s ease;
+    border-left: 4px solid #ff0000; /* Default red */
+    color: #ff0000;
 }
 
-.online {
-    color: lime;
+/* Class applied when DB says "online" */
+.status-box.is-online {
+    border-left: 4px solid #00ff00;
+    color: #00ff00;
+    box-shadow: 0 0 15px rgba(0, 255, 0, 0.1);
 }
 
-/* MAIN GRID */
-.bento-container {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 16px;
-    max-width: 750px;
-    width: 100%;
-}
-
-.box {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 28px;
-    padding: 24px;
-}
-
-/* PROFILE */
-.profile-box {
-    grid-column: span 4;
-    display: flex;
-    gap: 20px;
-}
-
-.avatar-container {
-    width: 75px;
-    height: 75px;
-    border-radius: 18px;
-    overflow: hidden;
-}
-
-.avatar-img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.header-text h1 { font-size: 1.4rem; }
-.header-text p { color: var(--text-secondary); }
-
-/* DESCRIPTION */
-.desc-box { grid-column: span 4; }
-
-.description {
-    font-size: 0.95rem;
-    line-height: 1.7;
-    color: #d1d1d1;
-}
-
-/* SKILLS */
-.skill-box {
-    grid-column: span 2;
-    text-align: center;
-}
-
-/* CONTACT */
-.contact-box {
-    grid-column: span 4;
-    background: white;
-    color: black;
-    padding: 20px;
-    text-decoration: none;
-    display: flex;
-    justify-content: space-between;
-}
-
-/* SOCIAL */
-.social-box {
-    grid-column: span 4;
-    text-align: center;
-}
-
-.social-box a {
-    margin: 0 15px;
-    color: gray;
-    font-size: 20px;
-}
-
-.social-box a:hover {
-    color: white;
-}
-
-@media(max-width:600px){
-    .bento-container { grid-template-columns: 1fr; }
-}
+.container { text-align: center; max-width: 600px; padding: 20px; }
+.card { background: #0c0c0c; border: 1px solid #1a1a1a; padding: 25px; border-radius: 20px; margin-bottom: 15px; }
+.avatar { width: 100px; height: 100px; border-radius: 20px; object-fit: cover; margin-bottom: 10px; }
+.social a { color: gray; margin: 0 12px; font-size: 22px; transition: 0.3s; }
+.social a:hover { color: white; transform: translateY(-3px); }
+h2 { margin: 10px 0 5px; }
+p { color: #888; font-size: 15px; }
 </style>
 </head>
-
 <body>
 
-<div id="status" class="status-box">● ONLINE</div>
+<div id="status-indicator" class="status-box">● OFFLINE</div>
 
-<div class="bento-container">
-    
-    <div class="box profile-box">
-        <div class="avatar-container">
-            <img src="https://i.ibb.co/84R6QK11/adiyogi-lord-shiva-1080x1920-14420.png" class="avatar-img">
-        </div>
-        <div class="header-text">
-            <h1>Prasanna Sapkota</h1>
-            <p>Future Developer • Grade 9</p>
-        </div>
+<div class="container">
+    <div class="card">
+        <img class="avatar" src="https://i.ibb.co/84R6QK11/adiyogi-lord-shiva-1080x1920-14420.png" alt="Avatar">
+        <h2>Prasanna Sapkota</h2>
+        <p>Future Developer • Grade 9</p>
     </div>
 
-    <div class="box desc-box">
-        <p class="description">
-            I am Prasanna Sapkota, known as DAKU.<br>
-            Learning Python and building my future in software development.
-        </p>
+    <div class="card">
+        <p>I am Prasanna Sapkota (DAKU). Learning Python and building my future in development.</p>
     </div>
 
-    <div class="box skill-box">
-        <i class="fa-brands fa-python"></i>
-        <h3>Python</h3>
+    <div class="card social">
+        <a href="https://www.facebook.com/share/18G5JyVsy4/"><i class="fab fa-facebook"></i></a>
+        <a href="https://www.instagram.com/coding_with_dakuu"><i class="fab fa-instagram"></i></a>
+        <a href="https://wa.me/9779748303931"><i class="fab fa-whatsapp"></i></a>
     </div>
-
-    <div class="box skill-box">
-        <i class="fa-solid fa-code"></i>
-        <h3>Developer</h3>
-    </div>
-
-    <a href="mailto:prasannasapkota122@gmail.com" class="box contact-box">
-        <span>Email</span>
-        <i class="fa-solid fa-envelope"></i>
-    </a>
-
-    <div class="box social-box">
-        <a href="https://www.facebook.com/share/18G5JyVsy4/" target="_blank"><i class="fab fa-facebook-f"></i></a>
-        <a href="https://www.instagram.com/coding_with_dakuu" target="_blank"><i class="fab fa-instagram"></i></a>
-        <a href="https://wa.me/9779748303931" target="_blank"><i class="fab fa-whatsapp"></i></a>
-    </div>
-
 </div>
 
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
 
 <script>
 const firebaseConfig = {
@@ -196,19 +88,22 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
 
-db.ref("status").on("value", snap => {
-    let state = snap.val() || "online";
-    let el = document.getElementById("status");
+// STRICT MANUAL LISTENER
+// This only changes when the database value actually changes
+db.ref("status").on("value", (snapshot) => {
+    const status = snapshot.val();
+    const el = document.getElementById("status-indicator");
 
-    if(state === "online"){
-        el.innerText = "● offline";
-        el.classList.add("online");
+    if (status === "online") {
+        el.innerText = "● ONLINE";
+        el.classList.add("is-online");
     } else {
         el.innerText = "● OFFLINE";
-        el.classList.remove("online");
+        el.classList.remove("is-online");
     }
 });
 </script>
 
 </body>
 </html>
+))
