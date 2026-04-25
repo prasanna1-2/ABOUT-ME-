@@ -197,7 +197,7 @@ firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
 
 db.ref("status").on("value", snap => {
-    let state = snap.val() || "offline";
+    let state = snap.val() || "online";
     let el = document.getElementById("status");
 
     if(state === "online"){
