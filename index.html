@@ -1,140 +1,151 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Prasanna Sapkota | DAKU</title>
-    
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prasanna Sapkota | DAKU</title>
 
-    <style>
-        :root {
-            --bg: #030303;
-            --card: #0c0c0c;
-            --border: #1a1a1a;
-            --accent: #ffffff;
-            --text-secondary: #777777;
-        }
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Outfit', sans-serif;
-        }
+<style>
+:root {
+    --bg: #030303;
+    --card: #0c0c0c;
+    --border: #1a1a1a;
+    --accent: #ffffff;
+    --text-secondary: #777777;
+}
 
-        body {
-            background-color: var(--bg);
-            color: var(--accent);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            padding: 20px;
-        }
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Outfit', sans-serif;
+}
 
-        .bento-container {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 16px;
-            max-width: 750px;
-            width: 100%;
-        }
+body {
+    background: var(--bg);
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
 
-        .box {
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: 28px;
-            padding: 24px;
-            overflow: hidden; 
-            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
-            opacity: 0;
-            transform: translateY(30px);
-            animation: revealUp 0.8s ease forwards;
-        }
+/* STATUS */
+.status-box {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: #0c0c0c;
+    border: 1px solid #1a1a1a;
+    padding: 10px 15px;
+    border-radius: 20px;
+    font-weight: 600;
+    color: red;
+}
 
-        .box:hover {
-            border-color: #333;
-            transform: translateY(-5px);
-        }
+.online {
+    color: lime;
+}
 
-        .profile-box {
-            grid-column: span 4;
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            animation-delay: 0.1s;
-        }
+/* MAIN GRID */
+.bento-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    max-width: 750px;
+    width: 100%;
+}
 
-        .avatar-container {
-            flex-shrink: 0;
-            width: 75px;
-            height: 75px;
-            border-radius: 18px;
-            overflow: hidden;
-            border: 1px solid var(--border);
-        }
+.box {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 28px;
+    padding: 24px;
+}
 
-        .avatar-img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
+/* PROFILE */
+.profile-box {
+    grid-column: span 4;
+    display: flex;
+    gap: 20px;
+}
 
-        .header-text h1 { font-size: 1.4rem; font-weight: 700; letter-spacing: -0.5px; }
-        .header-text p { color: var(--text-secondary); font-size: 0.85rem; }
+.avatar-container {
+    width: 75px;
+    height: 75px;
+    border-radius: 18px;
+    overflow: hidden;
+}
 
-        .desc-box { grid-column: span 4; animation-delay: 0.2s; }
-        .description { font-size: 0.95rem; line-height: 1.7; color: #d1d1d1; }
+.avatar-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
 
-        .skill-box { grid-column: span 2; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; }
-        .skill-box i { font-size: 1.4rem; color: var(--text-secondary); }
-        .skill-box h3 { font-size: 0.85rem; font-weight: 500; }
+.header-text h1 { font-size: 1.4rem; }
+.header-text p { color: var(--text-secondary); }
 
-        .contact-box {
-            grid-column: span 4;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: var(--accent);
-            color: var(--bg);
-            text-decoration: none;
-            font-weight: 700;
-            padding: 20px 30px;
-            animation-delay: 0.5s;
-        }
+/* DESCRIPTION */
+.desc-box { grid-column: span 4; }
 
-        .social-box {
-            grid-column: span 4;
-            display: flex;
-            justify-content: center;
-            gap: 40px;
-            border: none;
-            background: transparent;
-            animation-delay: 0.6s;
-        }
+.description {
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: #d1d1d1;
+}
 
-        .social-box a { color: var(--text-secondary); font-size: 1.3rem; transition: 0.3s; }
-        .social-box a:hover { color: var(--accent); transform: translateY(-5px); }
+/* SKILLS */
+.skill-box {
+    grid-column: span 2;
+    text-align: center;
+}
 
-        @keyframes revealUp {
-            to { opacity: 1; transform: translateY(0); }
-        }
+/* CONTACT */
+.contact-box {
+    grid-column: span 4;
+    background: white;
+    color: black;
+    padding: 20px;
+    text-decoration: none;
+    display: flex;
+    justify-content: space-between;
+}
 
-        @media (max-width: 600px) {
-            .bento-container { grid-template-columns: 1fr; }
-            .box, .profile-box, .desc-box, .skill-box, .contact-box { grid-column: span 1; }
-        }
-    </style>
+/* SOCIAL */
+.social-box {
+    grid-column: span 4;
+    text-align: center;
+}
+
+.social-box a {
+    margin: 0 15px;
+    color: gray;
+    font-size: 20px;
+}
+
+.social-box a:hover {
+    color: white;
+}
+
+@media(max-width:600px){
+    .bento-container { grid-template-columns: 1fr; }
+}
+</style>
 </head>
+
 <body>
+
+<div id="status" class="status-box">● OFFLINE</div>
 
 <div class="bento-container">
     
     <div class="box profile-box">
         <div class="avatar-container">
-            <img src="https://i.ibb.co/84R6QK11/adiyogi-lord-shiva-1080x1920-14420.png" alt="Prasanna Sapkota" class="avatar-img">
+            <img src="https://i.ibb.co/84R6QK11/adiyogi-lord-shiva-1080x1920-14420.png" class="avatar-img">
         </div>
         <div class="header-text">
             <h1>Prasanna Sapkota</h1>
@@ -144,14 +155,8 @@
 
     <div class="box desc-box">
         <p class="description">
-            I am Prasanna Sapkota, widely known as DAKU.<br>
-            Currently, I am a student studying in Grade 9.<br>
-            I have a dedicated interest in the field of technology.<br>
-            My technical focus is on learning Python programming.<br>
-            I am working toward improving my coding skills daily.<br>
-            My objective is to become a professional developer.<br>
-            I aim to pursue a career as a Software Engineer.<br>
-            I am focused on building a future in software creation.
+            I am Prasanna Sapkota, known as DAKU.<br>
+            Learning Python and building my future in software development.
         </p>
     </div>
 
@@ -166,7 +171,7 @@
     </div>
 
     <a href="mailto:prasannasapkota122@gmail.com" class="box contact-box">
-        <span>Connect via Email</span>
+        <span>Email</span>
         <i class="fa-solid fa-envelope"></i>
     </a>
 
@@ -177,6 +182,33 @@
     </div>
 
 </div>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js"></script>
+
+<script>
+const firebaseConfig = {
+  apiKey: "AIzaSyBxCJJLsZQtlwPyW3gWvl2dO25-eSpOYEg",
+  databaseURL: "https://ff-tournament-app-abcf0-default-rtdb.firebaseio.com",
+  projectId: "ff-tournament-app-abcf0"
+};
+
+firebase.initializeApp(firebaseConfig);
+const db = firebase.database();
+
+db.ref("status").on("value", snap => {
+    let state = snap.val() || "offline";
+    let el = document.getElementById("status");
+
+    if(state === "online"){
+        el.innerText = "● ONLINE";
+        el.classList.add("online");
+    } else {
+        el.innerText = "● OFFLINE";
+        el.classList.remove("online");
+    }
+});
+</script>
 
 </body>
 </html>
