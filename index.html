@@ -27,40 +27,126 @@ body {
     right: 20px;
     background: #0c0c0c;
     border: 1px solid #1a1a1a;
-    padding: 10px 20px;
+    padding: 10px 18px;
     border-radius: 50px;
     font-weight: 800;
     font-size: 14px;
     letter-spacing: 1px;
-    transition: all 0.4s ease;
-    border-left: 4px solid #ff0000; /* Default red */
-    color: #ff0000;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.3s ease;
 }
 
-/* Class applied when DB says "online" */
-.status-box.is-online {
+/* STATES */
+.is-online {
     border-left: 4px solid #00ff00;
     color: #00ff00;
-    box-shadow: 0 0 15px rgba(0, 255, 0, 0.1);
+    box-shadow: 0 0 15px rgba(0,255,0,0.3);
 }
 
-.container { text-align: center; max-width: 600px; padding: 20px; }
-.card { background: #0c0c0c; border: 1px solid #1a1a1a; padding: 25px; border-radius: 20px; margin-bottom: 15px; }
-.avatar { width: 100px; height: 100px; border-radius: 20px; object-fit: cover; margin-bottom: 10px; }
-.social a { color: gray; margin: 0 12px; font-size: 22px; transition: 0.3s; }
-.social a:hover { color: white; transform: translateY(-3px); }
-h2 { margin: 10px 0 5px; }
-p { color: #888; font-size: 15px; }
+.is-offline {
+    border-left: 4px solid red;
+    color: red;
+}
+
+.checking {
+    border-left: 4px solid #ffaa00;
+    color: #ffaa00;
+}
+
+/* ANIMATION */
+.dot {
+    width: 8px;
+    height: 8px;
+    background: #ffaa00;
+    border-radius: 50%;
+    animation: pulse 1s infinite;
+}
+
+.dots::after {
+    content: "";
+    animation: dots 1.2s steps(3, end) infinite;
+}
+
+@keyframes dots {
+    0% { content: ""; }
+    33% { content: "."; }
+    66% { content: ".."; }
+    100% { content: "..."; }
+}
+
+@keyframes pulse {
+    0% { transform: scale(0.8); opacity: 0.5; }
+    50% { transform: scale(1.2); opacity: 1; }
+    100% { transform: scale(0.8); opacity: 0.5; }
+}
+
+/* CONTENT */
+.container {
+    text-align: center;
+    max-width: 600px;
+    padding: 20px;
+}
+
+.card {
+    background: #0c0c0c;
+    border: 1px solid #1a1a1a;
+    padding: 25px;
+    border-radius: 20px;
+    margin-bottom: 15px;
+}
+
+.avatar {
+    width: 100px;
+    height: 100px;
+    border-radius: 20px;
+    object-fit: cover;
+    margin-bottom: 10px;
+}
+
+/* PRO BADGE */
+.pro-badge {
+    display: inline-block;
+    margin-left: 8px;
+    padding: 3px 8px;
+    font-size: 12px;
+    font-weight: 800;
+    border-radius: 8px;
+    background: linear-gradient(45deg, gold, orange);
+    color: black;
+}
+
+.social a {
+    color: gray;
+    margin: 0 12px;
+    font-size: 22px;
+    transition: 0.3s;
+}
+
+.social a:hover {
+    color: white;
+}
 </style>
 </head>
 <body>
 
-<div id="status-indicator" class="status-box">● OFFLINE</div>
+<!-- STATUS -->
+<div id="status-indicator" class="status-box checking">
+    <span class="dot"></span>
+    CHECKING<span class="dots"></span>
+</div>
 
 <div class="container">
+
     <div class="card">
-        <img class="avatar" src="https://i.ibb.co/84R6QK11/adiyogi-lord-shiva-1080x1920-14420.png" alt="Avatar">
-        <h2>Prasanna Sapkota</h2>
+        <img class="avatar" src="https://i.ibb.co/84R6QK11/adiyogi-lord-shiva-1080x1920-14420.png">
+
+        <h2>
+            Prasanna Sapkota 
+            <span class="pro-badge">PRO</span>
+        </h2>
+
         <p>Future Developer • Grade 9</p>
     </div>
 
@@ -73,8 +159,10 @@ p { color: #888; font-size: 15px; }
         <a href="https://www.instagram.com/coding_with_dakuu"><i class="fab fa-instagram"></i></a>
         <a href="https://wa.me/9779748303931"><i class="fab fa-whatsapp"></i></a>
     </div>
+
 </div>
 
+<!-- FIREBASE -->
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
 
@@ -88,22 +176,42 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
 
-// STRICT MANUAL LISTENER
-// This only changes when the database value actually changes
-db.ref("status").on("value", (snapshot) => {
-    const status = snapshot.val();
-    const el = document.getElementById("status-indicator");
+const el = document.getElementById("status-indicator");
 
-    if (status === "online") {
+let statusValue = null;
+let connected = true;
+
+/* UPDATE UI */
+function updateUI() {
+    el.classList.remove("is-online","is-offline","checking");
+
+    if (!connected) {
+        el.innerHTML = `<span class="dot"></span> CHECKING<span class="dots"></span>`;
+        el.classList.add("checking");
+        return;
+    }
+
+    if (statusValue === "online") {
         el.innerText = "● ONLINE";
         el.classList.add("is-online");
     } else {
         el.innerText = "● OFFLINE";
-        el.classList.remove("is-online");
+        el.classList.add("is-offline");
     }
+}
+
+/* ADMIN STATUS */
+db.ref("status").on("value", (snap) => {
+    statusValue = snap.val();
+    updateUI();
+});
+
+/* CONNECTION CHECK */
+db.ref(".info/connected").on("value", (snap) => {
+    connected = snap.val();
+    updateUI();
 });
 </script>
 
 </body>
 </html>
-))
