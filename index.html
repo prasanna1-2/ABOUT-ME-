@@ -36,7 +36,6 @@ body {
     gap: 6px;
 }
 
-/* STATES */
 .is-online {
     border-left: 4px solid #00ff00;
     color: #00ff00;
@@ -53,7 +52,6 @@ body {
     color: #ffaa00;
 }
 
-/* ANIMATION */
 .dot {
     width: 8px;
     height: 8px;
@@ -95,22 +93,16 @@ body {
     margin-bottom: 15px;
 }
 
-/* 🔥 CROPPED IMAGE (slightly downward focus) */
 .avatar {
     width: 120px;
     height: 120px;
-
     border-radius: 20px;
     object-fit: cover;
-
-    /* 👇 shifted slightly down for better framing */
     object-position: center 25%;
-
     box-shadow: 0 0 15px rgba(255,255,255,0.05);
     margin-bottom: 10px;
 }
 
-/* NAME */
 .name {
     display: flex;
     align-items: center;
@@ -118,11 +110,16 @@ body {
     gap: 6px;
 }
 
-/* VERIFIED BADGE */
 .verified {
     width: 18px;
     height: 18px;
     display: inline-flex;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.verified:hover {
+    transform: scale(1.2);
 }
 
 .verified svg {
@@ -130,7 +127,6 @@ body {
     height: 100%;
 }
 
-/* SOCIAL */
 .social a {
     color: gray;
     margin: 0 12px;
@@ -140,6 +136,27 @@ body {
 
 .social a:hover {
     color: white;
+}
+
+/* 🔥 POPUP */
+.popup {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    background: #111;
+    border: 1px solid #222;
+    padding: 14px 25px;
+    border-radius: 12px;
+    font-weight: 600;
+    opacity: 0;
+    transition: 0.4s ease;
+    box-shadow: 0 0 20px rgba(0,0,0,0.5);
+}
+
+.popup.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
 }
 </style>
 </head>
@@ -161,7 +178,7 @@ body {
             Prasanna Sapkota
 
             <!-- VERIFIED -->
-            <span class="verified">
+            <span class="verified" onclick="showPopup()">
                 <svg viewBox="0 0 24 24" fill="#1877F2">
                     <circle cx="12" cy="12" r="10"/>
                     <path d="M7 12.5L10 15L17 9" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -184,6 +201,9 @@ body {
 
 </div>
 
+<!-- 🔥 POPUP ELEMENT -->
+<div id="popup" class="popup">✔ DAKU OFC VERIFIED</div>
+
 <!-- FIREBASE -->
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
@@ -200,26 +220,17 @@ const db = firebase.database();
 
 const el = document.getElementById("status-indicator");
 
-/* STATES */
 let statusValue = null;
 let connected = false;
 let loaded = false;
 
-/* ALWAYS SHOW CHECKING FIRST */
 function setChecking() {
     el.className = "status-box checking";
     el.innerHTML = `<span class="dot"></span> CHECKING<span class="dots"></span>`;
 }
 
-/* UPDATE UI */
 function updateUI() {
-
-    if (!loaded) {
-        setChecking();
-        return;
-    }
-
-    if (!connected) {
+    if (!loaded || !connected) {
         setChecking();
         return;
     }
@@ -235,21 +246,28 @@ function updateUI() {
     }
 }
 
-/* INIT */
 setChecking();
 
-/* FIREBASE STATUS */
 db.ref("status").on("value", (snap) => {
     statusValue = snap.val();
     loaded = true;
     updateUI();
 });
 
-/* CONNECTION CHECK */
 db.ref(".info/connected").on("value", (snap) => {
     connected = snap.val();
     updateUI();
 });
+
+/* 🔥 POPUP FUNCTION */
+function showPopup() {
+    const popup = document.getElementById("popup");
+    popup.classList.add("show");
+
+    setTimeout(() => {
+        popup.classList.remove("show");
+    }, 2500);
+}
 </script>
 
 </body>
