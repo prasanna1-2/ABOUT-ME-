@@ -31,11 +31,9 @@ body {
     border-radius: 50px;
     font-weight: 800;
     font-size: 14px;
-    letter-spacing: 1px;
     display: flex;
     align-items: center;
     gap: 6px;
-    transition: all 0.3s ease;
 }
 
 /* STATES */
@@ -82,7 +80,7 @@ body {
     100% { transform: scale(0.8); opacity: 0.5; }
 }
 
-/* CONTENT */
+/* CONTAINER */
 .container {
     text-align: center;
     max-width: 600px;
@@ -97,26 +95,42 @@ body {
     margin-bottom: 15px;
 }
 
+/* 🔥 CROPPED IMAGE (slightly downward focus) */
 .avatar {
-    width: 100px;
-    height: 100px;
+    width: 120px;
+    height: 120px;
+
     border-radius: 20px;
     object-fit: cover;
+
+    /* 👇 shifted slightly down for better framing */
+    object-position: center 25%;
+
+    box-shadow: 0 0 15px rgba(255,255,255,0.05);
     margin-bottom: 10px;
 }
 
-/* PRO BADGE */
-.pro-badge {
-    display: inline-block;
-    margin-left: 8px;
-    padding: 3px 8px;
-    font-size: 12px;
-    font-weight: 800;
-    border-radius: 8px;
-    background: linear-gradient(45deg, gold, orange);
-    color: black;
+/* NAME */
+.name {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
 }
 
+/* VERIFIED BADGE */
+.verified {
+    width: 18px;
+    height: 18px;
+    display: inline-flex;
+}
+
+.verified svg {
+    width: 100%;
+    height: 100%;
+}
+
+/* SOCIAL */
 .social a {
     color: gray;
     margin: 0 12px;
@@ -129,6 +143,7 @@ body {
 }
 </style>
 </head>
+
 <body>
 
 <!-- STATUS -->
@@ -142,9 +157,16 @@ body {
     <div class="card">
         <img class="avatar" src="https://i.ibb.co/84R6QK11/adiyogi-lord-shiva-1080x1920-14420.png">
 
-        <h2>
-            Prasanna Sapkota 
-            <span class="pro-badge">PRO</span>
+        <h2 class="name">
+            Prasanna Sapkota
+
+            <!-- VERIFIED -->
+            <span class="verified">
+                <svg viewBox="0 0 24 24" fill="#1877F2">
+                    <circle cx="12" cy="12" r="10"/>
+                    <path d="M7 12.5L10 15L17 9" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </span>
         </h2>
 
         <p>Future Developer • Grade 9</p>
@@ -178,18 +200,31 @@ const db = firebase.database();
 
 const el = document.getElementById("status-indicator");
 
+/* STATES */
 let statusValue = null;
-let connected = true;
+let connected = false;
+let loaded = false;
+
+/* ALWAYS SHOW CHECKING FIRST */
+function setChecking() {
+    el.className = "status-box checking";
+    el.innerHTML = `<span class="dot"></span> CHECKING<span class="dots"></span>`;
+}
 
 /* UPDATE UI */
 function updateUI() {
-    el.classList.remove("is-online","is-offline","checking");
 
-    if (!connected) {
-        el.innerHTML = `<span class="dot"></span> CHECKING<span class="dots"></span>`;
-        el.classList.add("checking");
+    if (!loaded) {
+        setChecking();
         return;
     }
+
+    if (!connected) {
+        setChecking();
+        return;
+    }
+
+    el.classList.remove("is-online","is-offline","checking");
 
     if (statusValue === "online") {
         el.innerText = "● ONLINE";
@@ -200,9 +235,13 @@ function updateUI() {
     }
 }
 
-/* ADMIN STATUS */
+/* INIT */
+setChecking();
+
+/* FIREBASE STATUS */
 db.ref("status").on("value", (snap) => {
     statusValue = snap.val();
+    loaded = true;
     updateUI();
 });
 
