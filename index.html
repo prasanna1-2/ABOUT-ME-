@@ -1,3 +1,5 @@
+<!-- index.html -->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,136 +11,133 @@
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
 
 <style>
-body {
-    margin: 0;
-    background: #030303;
-    color: white;
-    font-family: 'Outfit', sans-serif;
-    overflow: hidden;
+
+body{
+    margin:0;
+    background:#030303;
+    color:white;
+    font-family:'Outfit',sans-serif;
+    overflow:hidden;
 }
 
 /* MUSIC */
-.music-bar {
-    position: fixed;
-    top: 20px;
-    left: 20px;
-    background: #0c0c0c;
-    border: 1px solid #1a1a1a;
-    padding: 10px 16px;
-    border-radius: 50px;
-    display: flex;
-    gap: 8px;
-    cursor: pointer;
+.music-bar{
+    position:fixed;
+    top:20px;
+    left:20px;
+    background:#0c0c0c;
+    border:1px solid #1a1a1a;
+    padding:10px 16px;
+    border-radius:50px;
+    display:flex;
+    gap:8px;
+    cursor:pointer;
+    z-index:999;
 }
 
 /* STATUS */
-.status-box {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    background: #0c0c0c;
-    border: 1px solid #1a1a1a;
-    padding: 10px 18px;
-    border-radius: 50px;
-    font-weight: 800;
+.status-box{
+    position:fixed;
+    top:20px;
+    right:20px;
+    background:#0c0c0c;
+    border:1px solid #1a1a1a;
+    padding:10px 18px;
+    border-radius:50px;
+    font-weight:800;
+    z-index:999;
 }
-.is-online { color:#00ff00; border-left:4px solid #00ff00; }
-.is-offline { color:red; border-left:4px solid red; }
+
+.is-online{
+    color:#00ff00;
+    border-left:4px solid #00ff00;
+}
+
+.is-offline{
+    color:red;
+    border-left:4px solid red;
+}
 
 /* MAIN */
-.container {
-    text-align: center;
-    max-width: 600px;
-    margin: auto;
-    margin-top: 120px;
+.container{
+    text-align:center;
+    max-width:600px;
+    margin:auto;
+    margin-top:120px;
 }
 
-.card {
-    background: #0c0c0c;
-    border: 1px solid #1a1a1a;
-    padding: 25px;
-    border-radius: 20px;
-    margin-bottom: 15px;
+.card{
+    background:#0c0c0c;
+    border:1px solid #1a1a1a;
+    padding:25px;
+    border-radius:20px;
+    margin-bottom:15px;
 }
 
-/* PROFILE */
-.avatar {
-    width: 120px;
-    height: 120px;
-    border-radius: 20px;
-    object-fit: cover;
-    object-position: center 40%;
+.avatar{
+    width:120px;
+    height:120px;
+    border-radius:20px;
+    object-fit:cover;
+    object-position:center 40%;
 }
 
-/* NAME */
-.name {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 8px;
+.name{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:8px;
 }
 
-/* VERIFIED BADGE */
-.verified svg {
-    vertical-align: middle;
-    transition: 0.3s;
-}
-.verified svg:hover {
-    transform: scale(1.15);
+.social a{
+    color:gray;
+    margin:0 12px;
+    font-size:22px;
 }
 
-/* SOCIAL */
-.social a {
-    color: gray;
-    margin: 0 12px;
-    font-size: 22px;
-}
-.social a:hover { color: white; }
-
-/* POPUP */
-.popup {
-    position: fixed;
-    bottom: 30px;
-    left: 50%;
-    transform: translateX(-50%) translateY(100px);
-    background: #111;
-    padding: 14px 25px;
-    border-radius: 12px;
-    opacity: 0;
-    transition: 0.4s;
-}
-.popup.show {
-    opacity: 1;
-    transform: translateX(-50%) translateY(0);
+.social a:hover{
+    color:white;
 }
 
-/* EFFECTS */
-.butterfly {
-    position: absolute;
-    font-size: 18px;
-    opacity: 0.8;
-    animation: fly 10s linear infinite;
-    display: none;
-}
-@keyframes fly {
-    from { transform: translateY(100vh); }
-    to { transform: translateY(-10vh); }
+/* HELP BUTTON */
+.help-btn{
+    position:fixed;
+    bottom:90px;
+    right:20px;
+    background:#00ff66;
+    color:black;
+    border:none;
+    padding:14px 22px;
+    border-radius:50px;
+    font-size:16px;
+    font-weight:800;
+    cursor:pointer;
+    box-shadow:0 0 15px rgba(0,255,100,0.5);
+    transition:0.3s;
 }
 
-.dot-bg {
-    position: absolute;
-    width: 4px;
-    height: 4px;
-    background: white;
-    opacity: 0.4;
-    border-radius: 50%;
-    animation: float 6s infinite;
-    display: none;
+.help-btn:hover{
+    transform:scale(1.08);
+    background:#00cc55;
 }
-@keyframes float {
-    from { transform: translateY(0); }
-    to { transform: translateY(-100vh); }
+
+.popup{
+    position:fixed;
+    bottom:30px;
+    left:50%;
+    transform:translateX(-50%) translateY(100px);
+    background:#111;
+    padding:14px 25px;
+    border-radius:12px;
+    opacity:0;
+    transition:0.4s;
 }
+
+.popup.show{
+    opacity:1;
+    transform:translateX(-50%) translateY(0);
+}
+
 </style>
 </head>
 
@@ -153,35 +152,31 @@ body {
 <audio id="music" src="daku-music.mp3"></audio>
 
 <!-- STATUS -->
-<div id="status-indicator" class="status-box">● LOADING...</div>
+<div id="status-indicator" class="status-box">
+    ● LOADING...
+</div>
 
+<!-- MAIN -->
 <div class="container">
 
     <div class="card">
-        <img class="avatar" src="https://i.ibb.co/84R6QK11/adiyogi-lord-shiva-1080x1920-14420.png">
+
+        <img class="avatar"
+        src="https://i.ibb.co/84R6QK11/adiyogi-lord-shiva-1080x1920-14420.png">
 
         <h2 class="name">
             Prasanna Sapkota
-
-            <!-- 🔵 META VERIFIED BADGE -->
-            <span class="verified" onclick="showPopup()">
-                <svg viewBox="0 0 24 24" width="18" height="18">
-                    <circle cx="12" cy="12" r="10" fill="#1877F2"/>
-                    <path d="M7 12.5L10 15L17 9"
-                        fill="none"
-                        stroke="white"
-                        stroke-width="2.2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"/>
-                </svg>
-            </span>
         </h2>
 
         <p>Future Developer • Grade 9</p>
+
     </div>
 
     <div class="card">
-        <p>I am Prasanna Sapkota (DAKU). Learning Python and building my future.</p>
+        <p>
+            I am Prasanna Sapkota (DAKU). 
+            Learning Python and building my future.
+        </p>
     </div>
 
     <div class="card social">
@@ -192,41 +187,60 @@ body {
 
 </div>
 
+<!-- HELP BUTTON -->
+<button class="help-btn" onclick="openChatPage()">
+    💬 GET HELP
+</button>
+
 <!-- POPUP -->
-<div id="popup" class="popup">DAKU OFFICIAL VERIFIED ✅</div>
+<div id="popup" class="popup">
+    DAKU OFFICIAL VERIFIED ✅
+</div>
 
 <!-- FIREBASE -->
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
 
 <script>
+
+/* FIREBASE CONFIG */
 const firebaseConfig = {
-  apiKey: "AIzaSyBxCJJLsZQtlwPyWgvl2dO25-eSpOYEg",
-  databaseURL: "https://ff-tournament-app-abcf0-default-rtdb.firebaseio.com",
-  projectId: "ff-tournament-app-abcf0"
+    apiKey: "AIzaSyBxCJJLsZQtlwPyWgvl2dO25-eSpOYEg",
+    authDomain: "ff-tournament-app-abcf0.firebaseapp.com",
+    databaseURL: "https://ff-tournament-app-abcf0-default-rtdb.firebaseio.com",
+    projectId: "ff-tournament-app-abcf0",
+    storageBucket: "ff-tournament-app-abcf0.appspot.com",
+    messagingSenderId: "1777124189720",
+    appId: "1:1777124189720:web:dakuofficial"
 };
 
 firebase.initializeApp(firebaseConfig);
+
 const db = firebase.database();
 
-/* STATUS */
+/* STATUS SYSTEM */
 const statusEl = document.getElementById("status-indicator");
 
 db.ref("status").on("value", snap => {
+
     const val = snap.val();
 
     statusEl.className = "status-box";
 
-    if (val === "online") {
+    if(val === "online"){
+
         statusEl.classList.add("is-online");
         statusEl.innerText = "● ONLINE";
-    } else {
+
+    }else{
+
         statusEl.classList.add("is-offline");
         statusEl.innerText = "● OFFLINE";
     }
+
 });
 
-/* MUSIC */
+/* MUSIC SYSTEM */
 const music = document.getElementById("music");
 const icon = document.getElementById("musicIcon");
 const text = document.getElementById("musicText");
@@ -234,29 +248,52 @@ const text = document.getElementById("musicText");
 let musicState = "off";
 
 db.ref("music").on("value", snap => {
+
     musicState = snap.val();
 
-    if (musicState === "on") {
+    if(musicState === "on"){
+
         music.play().catch(()=>{});
+
         icon.className = "fas fa-pause";
         text.innerText = "PAUSE";
-    } else {
+
+    }else{
+
         music.pause();
+
         icon.className = "fas fa-play";
         text.innerText = "PLAY";
     }
+
 });
 
 function toggleMusic(){
-    db.ref("music").set(musicState === "on" ? "off" : "on");
+
+    db.ref("music").set(
+        musicState === "off" ? "on" : "off"
+    );
+
 }
 
 /* POPUP */
 function showPopup(){
+
     let p = document.getElementById("popup");
+
     p.classList.add("show");
-    setTimeout(()=>p.classList.remove("show"), 2000);
+
+    setTimeout(()=>{
+        p.classList.remove("show");
+    },2000);
+
 }
+
+/* OPEN CHAT PAGE */
+function openChatPage(){
+    window.location.href = "chat.html";
+}
+
 </script>
 
 </body>
