@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DAKU AI CHAT</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+
+<style>
+
+body{
+    margin:0;
+    background:#030303;
+    font-family:'Outfit',sans-serif;
+    color:white;
+}
+
+.header{
+    background:#0c0c0c;
+    padding:18px;
+    text-align:center;
+    font-size:22px;
+    font-weight:800;
+    border-bottom:1px solid #1a1a1a;
+}
+
+.chat-area{
+    padding:20px;
+    max-width:500px;
+    margin:auto;
+}
+
+.bot-msg,.user-msg{
+    padding:14px;
+    border-radius:15px;
+    margin-bottom:15px;
+    animation:fade 0.3s ease;
+}
+
+.bot-msg{
+    background:#111;
+}
+
+.user-msg{
+    background:#00ff66;
+    color:black;
+    text-align:right;
+    font-weight:700;
+}
+
+.option-btn{
+    width:100%;
+    padding:12px;
+    border:none;
+    border-radius:12px;
+    margin-top:10px;
+    background:#00ff66;
+    color:black;
+    font-weight:800;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+.option-btn:hover{
+    background:#00cc55;
+}
+
+.back-btn{
+    position:fixed;
+    top:20px;
+    left:20px;
+    background:#111;
+    color:white;
+    border:none;
+    padding:10px 16px;
+    border-radius:50px;
+    cursor:pointer;
+}
+
+a{
+    color:#00ff66;
+    text-decoration:none;
+}
+
+@keyframes fade{
+    from{
+        opacity:0;
+        transform:translateY(10px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<button class="back-btn" onclick="goBack()">
+    ⬅ BACK
+</button>
+
+<div class="header">
+    DAKU AI CHAT
+</div>
+<div class="chat-header">
+    <img src="https://i.ibb.co/jvkhYzkX/images.jpg" 
+         style="width:60px;height:70px;border-radius:50%;vertical-align:middle;margin-right:50px;">
+    DAKU AI CHAT
+</div>
+<div class="chat-area" id="messages">
+
+    <div class="bot-msg">
+
+        👋 Welcome to DAKU AI<br><br>
+
+        Choose a question below:
+
+        <button class="option-btn" onclick="reply(1)">
+            1️⃣ Who is DAKU?
+        </button>
+
+        <button class="option-btn" onclick="reply(2)">
+            2️⃣ What DAKU usually do?
+        </button>
+
+        <button class="option-btn" onclick="reply(3)">
+            3️⃣ What type of help can I expect?
+        </button>
+
+    </div>
+
+</div>
+
+<script>
+
+function goBack(){
+    window.location.href = "index.html";
+}
+
+function addUser(text){
+
+    let msg = document.getElementById("messages");
+
+    msg.innerHTML += `
+        <div class="user-msg">${text}</div>
+    `;
+}
+
+function addBot(text){
+
+    let msg = document.getElementById("messages");
+
+    msg.innerHTML += `
+        <div class="bot-msg">${text}</div>
+    `;
+
+    window.scrollTo(0,document.body.scrollHeight);
+}
+
+function reply(option){
+
+    /* QUESTION 1 */
+    if(option == 1){
+
+        addUser("1️⃣ Who is DAKU?");
+
+        setTimeout(()=>{
+
+            addBot(`
+                👑 Prasanna Sapkota is (DAKU). 
+                He created this web pages.
+            `);
+
+        },500);
+    }
+
+    /* QUESTION 2 */
+    if(option == 2){
+
+        addUser("2️⃣ What DAKU usually do?");
+
+        setTimeout(()=>{
+
+            addBot(`
+                💻 DAKU usually works on his projects.<br><br>
+
+                🔗 Github:
+                <a href="https://github.com/prasanna1-2" target="_blank">
+                    prasanna1-2
+                </a>
+            `);
+
+        },500);
+    }
+
+    /* QUESTION 3 */
+    if(option == 3){
+
+        addUser("3️⃣ What type of help can I expect?");
+
+        setTimeout(()=>{
+
+            addBot(`
+                🛠️ DAKU helps with:<br><br>
+
+                ✔️ Dollor card creation related help<br>
+                ✔️ Purchase of subscriptions<br>
+                ✔️ In-app purchases
+            `);
+
+        },500);
+    }
+
+}
+
+</script>
+
+</body>
+</html>
